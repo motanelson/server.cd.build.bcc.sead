@@ -1,2 +1,2 @@
-# tnk.game
+# tank.game
 tank race python
