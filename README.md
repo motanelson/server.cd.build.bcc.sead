@@ -1,2 +1,2 @@
-# car.race
-car race python
+# tnk.game
+tank race python
