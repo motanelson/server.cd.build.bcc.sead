@@ -1,2 +1,2 @@
-# tank.game
-tank race python
+# cd.build.bcc.sead
+sead .iso image cd builder 
