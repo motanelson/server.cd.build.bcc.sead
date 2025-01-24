@@ -67,7 +67,7 @@ def upload_file():
 
     # Executar build.sh com o contador como argumento
     try:
-        subprocess.run(['./starts.sh'], check=True)  # Executa o script starts.sh
+        subprocess.run(['./starts.sh', str(file_counter)], check=True)  # Executa o script starts.sh
 
         result = subprocess.run(
             ['./build.sh', str(file_counter)],
@@ -76,12 +76,12 @@ def upload_file():
             text=True,
             cwd=os.getcwd()
         )
-        
+        subprocess.run(['./ends.sh', str(file_counter)], check=True)  # Executa o script starts.sh
         # Incrementar o contador
         file_counter += 1
 
         # Gravar o executável temporário
-        if os.path.exists(executable_path):
+        if 0==0:
             return jsonify({
                 'stdout': result.stdout,
                 'stderr': result.stderr,
