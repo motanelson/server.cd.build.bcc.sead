@@ -128,8 +128,7 @@ def upload_file():
             cwd=os.getcwd()
         )
         
-        # Incrementar o contador
-        file_counter += 1
+        
 
         # Gravar o executável temporário
         if result.stdout.find("err")<0:
@@ -145,7 +144,8 @@ def upload_file():
              s=s.replace("$sterror",result.stderr.replace("\n","<br>"))
              file_counter += 1
              return s
-
+        # Incrementar o contador
+        file_counter += 1
     except subprocess.CalledProcessError as e:
         return jsonify({'error': 'Script execution failed', 'details': str(e)}), 500
 
