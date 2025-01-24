@@ -96,7 +96,7 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     global file_counter
-
+    file_counters=file_counter
     # Verificar e salvar o arquivo enviado
     if 'cfile' not in request.files:
         return "No file part", 400
@@ -109,19 +109,19 @@ def upload_file():
         return "Only .c files are allowed", 400
 
     # Salvar o arquivo
-    c_file_path = os.path.join(UPLOAD_FOLDER, str(file_counter)+".c")
+    c_file_path = os.path.join(UPLOAD_FOLDER, str(file_counters)+".c")
     file.save(c_file_path)
 
     # Nome do executável
-    executable_name = f"{file_counter}.iso"
+    executable_name = f"{file_counters}.iso"
     executable_path = os.path.join(BUILD_FOLDER, executable_name)
 
     # Executar build.sh com o contador como argumento
     try:
-        subprocess.run(['./starts.sh', str(file_counter)], check=True)  # Executa o script starts.sh
+        subprocess.run(['./starts.sh', str(file_counters)], check=True)  # Executa o script starts.sh
 
         result = subprocess.run(
-            ['./build.sh', str(file_counter)],
+            ['./build.sh', str(file_counters)],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -132,7 +132,7 @@ def upload_file():
 
         # Gravar o executável temporário
         if result.stdout.find("err")<0:
-            subprocess.run(['./ends.sh', str(file_counter)], check=True)  # Executa o script starts.sh
+            subprocess.run(['./ends.sh', str(file_counters)], check=True)  # Executa o script starts.sh
             s=HTML_Dowload.replace("$stdio",result.stdout.replace("\n","<br>"))
             s=s.replace("$sterror",result.stderr.replace("\n","<br>"))
             s=s.replace("$file", ("/download/"+executable_name).replace(".exe",""))
